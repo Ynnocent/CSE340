@@ -9,6 +9,7 @@ const express = require("express");
 const env = require("dotenv").config();
 const app = express();
 const expressLayouts = require("express-ejs-layouts");
+const baseController = require('./controller/baseController');
 const { get } = require("./routes/static");
 
 /* ***********************
@@ -19,10 +20,8 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout");
 
-app.get("/", (req, res, next) => {
-  res.render("index", {title: "Home"})
-});
-
+app.get("/", baseController.buildHome);
+app.use("/inv", require("./routes/inventoryRoute"))
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file

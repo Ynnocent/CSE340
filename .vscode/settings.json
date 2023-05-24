@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": true
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "render",
+            "connectString": "postgres://ynno_plucena:GEChzQm3FYTxdUNt9zyXUgTAABH2XynE@dpg-chfu9n3hp8u065s6kpp0-a.oregon-postgres.render.com/ynno"
+        }
+    ]
+}
