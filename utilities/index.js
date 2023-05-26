@@ -24,6 +24,46 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
+Util.buildClassificationItem = async function(data) {
+  let grid
+  if (data.length > 0) {
+    const mileage = data[0].inv_miles
+    const options = { style: 'decimal', maximumFractionDigits: 2 }
+    const dataMileage = mileage.toLocaleString('en-US', options)
+    grid = '<ul id="inv-display">'
+    console.log(data)
+
+      
+      grid +=  '<a href="../../inv/detail/'+ data[0].inv_id 
+        + '" title="View ' + data[0].inv_make + ' '+ data[0].inv_model 
+        + 'details"><img src="' + data[0].inv_image 
+        +'" alt="Image of '+ data[0].inv_make + ' ' + data[0].inv_model 
+        +' on CSE Motors" /></a>'
+        grid += '<div class="namePrice">'
+        grid += '<hr />'
+        grid += '<h2>'
+        grid += '<a href="../../inv/detail/' + data[0].inv_id +'" title="View ' 
+        + data[0].inv_make + ' ' + data[0].inv_model + ' details">' 
+        + data[0].inv_make + ' ' + data[0].inv_model + '</a>'
+        grid += '</h2>'
+        grid += '<p> Year: ' + data[0].inv_year + '</p>'
+        grid += '<span>$' 
+        + new Intl.NumberFormat('en-US').format(data[0].inv_price) + '</span>'
+        grid += '<p>'+ 'Mileage: '+ '<span>' + dataMileage + '</span>' + '</p>' 
+        grid += '<h2>' + data[0].inv_description + '</h2>'
+        
+        grid += '<div class="purchaseBttn">'
+        grid += '<hr />'
+        grid += '<button>' + 'Buy Now!' + '</button>'
+        grid += '</div>'
+
+
+  } else {
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
