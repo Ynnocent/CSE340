@@ -30,7 +30,7 @@ Util.buildClassificationItem = async function(data) {
     const mileage = data[0].inv_miles
     const options = { style: 'decimal', maximumFractionDigits: 2 }
     const dataMileage = mileage.toLocaleString('en-US', options)
-    grid = '<ul id="inv-display">'
+    grid = '<ul id="car-display">'
     console.log(data)
 
       
@@ -46,15 +46,17 @@ Util.buildClassificationItem = async function(data) {
         + data[0].inv_make + ' ' + data[0].inv_model + ' details">' 
         + data[0].inv_make + ' ' + data[0].inv_model + '</a>'
         grid += '</h2>'
-        grid += '<p> Year: ' + data[0].inv_year + '</p>'
-        grid += '<span>$' 
-        + new Intl.NumberFormat('en-US').format(data[0].inv_price) + '</span>'
-        grid += '<p>'+ 'Mileage: '+ '<span>' + dataMileage + '</span>' + '</p>' 
-        grid += '<h2>' + data[0].inv_description + '</h2>'
+        grid += '<h3> Year: ' + data[0].inv_year + '</h3>'
+        grid += '<h3>$' 
+        + new Intl.NumberFormat('en-US').format(data[0].inv_price) + '</h3>'
+        grid += '<h3>'+ 'Mileage: '+ '<span>' + dataMileage + '</span>' + '</h3>' 
+        grid += '<p>' + data[0].inv_description + '</p>'
         
-        grid += '<div class="purchaseBttn">'
+        grid += '<div class="purchaseLinks">'
         grid += '<hr />'
-        grid += '<button>' + 'Buy Now!' + '</button>'
+        grid += '<a href="#">' + 'Buy Now!' + '</a>'
+        grid += '<a href="#">' + 'Contact Us!' + '</a>'
+        grid += '<a href="#">' + 'Schedule Test Drive!' + '</a>'
         grid += '</div>'
 
 
@@ -97,5 +99,11 @@ Util.buildClassificationGrid = async function(data){
     return grid
   }
   
+  /* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util

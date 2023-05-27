@@ -2,6 +2,7 @@
 @media screen  and (max-width: 480px) {
     body {
         min-width: 480px;
+        margin: 0;
     }
 
     #top-header {
@@ -36,9 +37,12 @@
         font-size: 20px;
     }
 
+    main {
+        /* align-items: center; */
+        text-align: center;
+    }
+
     #wrapper {
-        
-        max-width: 1000px;
         background-color: white;
         border-radius: 1rem;
         padding: .5rem;
@@ -164,5 +168,46 @@
 
     .reviews-box {
         margin: 1rem;
+    }
+
+    #inv-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+    #inv-display li {
+        list-style: none;
+        margin: .5rem;
+        background-color: #4C4E52;
+        padding: .5rem;
+        width: 400px;
+    }#inv-display li a {
+        text-decoration: none;
+        color: white;
+    }
+    #inv-display li span {
+        color: white;
+    }
+
+    #car-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+    #car-display img {
+        max-width: 400px;
+        height: auto;
+    }
+    .purchaseLinks a{
+        text-decoration: none;
+        color: white;
+        background-color: #4C4E52;
+        padding: .2rem;
+        margin: .5rem;
+        border-radius: .5rem;
     }
 }
