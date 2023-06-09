@@ -198,12 +198,34 @@
   #inv-display li span {
     color: white;
   }
-  .purchaseLinks a{
+  .purchaseLinks a {
     text-decoration: none;
     color: white;
-    background-color: #4C4E52;
-    padding: .5rem;
-    margin: .5rem;
-    border-radius: .5rem;
-}
+    background-color: #4c4e52;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  .register-div {
+    background-color: #4c4e52;
+    color: white;
+    padding: 2.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .login-div {
+    background-color: #4c4e52;
+    color: white;
+    padding: 2.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  input:required:invalid,
+  input:focus:invalid {
+    color: red;
+  }
+
+  input:required:valid {
+    color: green;
+  }
 }
