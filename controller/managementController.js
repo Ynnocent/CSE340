@@ -2,46 +2,50 @@ const classificationModel = require("../model/classification-model");
 const invModel = require("../model/inventory-model");
 const utilities = require("../utilities/");
 
-
 async function buildManagement(req, res, next) {
-  let nav = utilities.getNav();
-
+  let updatedNav = await utilities.getNav();
   res.render("inventory/management", {
-    title: "Management",
+    title: "Add New Classification",
+    nav: updatedNav,
+    errors: null,
+  });
+}
+
+async function buildNewItem(req, res, next) {
+  let nav = await utilities.getNav();
+  let dropdown = await utilities.getNewClassData();
+  res.render("inventory/newInventory", {
+    title: "Add New Car",
     nav,
     errors: null,
+    dropdown,
   });
 }
 
 async function createNewClassification(req, res, next) {
   const { classification_name } = req.body;
+  let newClassification = await classificationModel.createNewClassification(
+    classification_name
+  );
 
-  try {
-    const newClassificationModel =
-      classificationModel.createNewClassification(classification_name);
-    if (newClassificationModel) {
-        let newclass = classification_name;
-      req.flash(
-        "Notice",
-        "Conhratulations, a new classification has been created"
-      );
-      res.status(201).render("inventory/management", {
-        title: "Management",
-        nav,
-        newclass,
-        error: null,
-      });
-    }
-  } catch (error) {
-    req.flash(
-      "Notice",
-      "There has been a problem in creating a new classification"
-    );
-    
-    res.status(500).render("inventory/management", {
-      title: "Management",
+  if (newClassification) {
+    let nav = await utilities.getNav();
+    let newClassData = await utilities.getNewClassData();
+    req.flash("success", "A new classification has been added");
+    res.status(201).render("inventory/newInventory", {
+      title: "Add New Car",
       nav,
-      errors,
+      dropdown: newClassData,
+      errors: null,
+    });
+  } else {
+    let dropdown = await utilities.getNewClassData();
+    req.flash("error", "An error has occured. Failed to add classification");
+    res.status(500).render("inventory/management", {
+      title: "Add New Classification",
+      nav,
+      errors: null,
+      dropdown,
     });
   }
 }
@@ -57,9 +61,11 @@ async function createNewInventory(req, res, next) {
     inv_price,
     inv_miles,
     inv_color,
+    classification_id,
   } = req.body;
+  console.log(req.body);
   try {
-    const newInventoryItem = invModel.createNewInventoryItem(
+    const newInventoryItem = await invModel.createNewInventoryItem(
       inv_make,
       inv_model,
       inv_year,
@@ -68,25 +74,39 @@ async function createNewInventory(req, res, next) {
       inv_thumbnail,
       inv_price,
       inv_miles,
-      inv_color
+      inv_color,
+      classification_id
     );
-
+    console.log(newInventoryItem);
     if (newInventoryItem) {
-        req.flash("Notice", "Congratulations, a new car has been added into the inventory");
-        res.status(201).render("inventory/management",{
-            title: "Management",
-            nav,
-            errors: null,
-        })
+      let dropdown = await utilities.getNewClassData();
+      let nav = await utilities.getNav();
+      req.flash(
+        "success",
+        "Congratulations, a new car has been added into the inventory"
+      );
+      res.status(201).render("inventory/management", {
+        title: "Add New Classification",
+        nav,
+        errors: null,
+        dropdown,
+      });
     }
   } catch (error) {
-    req.flash("Notice", "Error creating car");
+    let dropdown = await utilities.getNewClassData();
+    req.flash("error", "Error creating car");
     res.status(500).render("inventory/management", {
-        title: "Management",
-        nav,
-        errors,
-    })
+      title: "Add New Classification",
+      nav,
+      errors: null,
+      dropdown,
+    });
   }
 }
 
-module.exports = { buildManagement, createNewClassification, createNewInventory };
+module.exports = {
+  buildManagement,
+  buildNewItem,
+  createNewClassification,
+  createNewInventory,
+};

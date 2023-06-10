@@ -1,0 +1,123 @@
+<h1><%- title %></h1>
+<%- messages() %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+<div class="add-item-div">
+  <form action="/management/newitem" class="new-item-form" method="post">
+    <% if (!dropdown) { %>
+    <p>No Drop Down</p>
+      <% } else if (dropdown) {%>
+        <div>
+          <label for="classification_name"> Classification: <%- dropdown %> </label>
+        </div>
+    <% } %>
+    
+    <div>
+      <label for="inv_make">Make:</label>
+
+      <input
+        type="text"
+        id="inv_make"
+        name="inv_make"
+        required
+        pattern="[a-zA-Z]{3,}$"
+        placeholder="Enter Car Make"
+      />
+    </div>
+    <div>
+      <label for="inv_model">Model:</label>
+
+      <input
+        type="text"
+        id="inv_model"
+        name="inv_model"
+        required
+        pattern="[a-zA-Z]{3,}$"
+        placeholder="Enter Car Model"
+      />
+    </div>
+    <div>
+      <label for="inv_year">Year:</label>
+
+      <input
+        type="number"
+        id="inv_year"
+        name="inv_year"
+        min="1800"
+        required
+        placeholder="Enter Car Year"
+      />
+    </div>
+    <div>
+      <label for="inv_description">Description:</label>
+      <textarea
+        id="inv_description"
+        name="inv_description"
+        oninvalid="this.setCustomValidity('Car year must be at least 3 letters long')"
+        required
+        placeholder="Enter Car Description"
+      ></textarea>
+    </div>
+    <div>
+      <label for="inv_image">Image:</label>
+
+      <input
+        type="text"
+        id="inv_image"
+        name="inv_image"
+        value="/images/vehicles/no-image.png"
+        required
+      />
+    </div>
+    <div>
+      <label for="inv_thumbnail">Thumbnail:</label>
+
+      <input
+        type="text"
+        id="inv_thumbnail"
+        name="inv_thumbnail"
+        value="/images/vehicles/no-image-tn.png"
+        required
+      />
+    </div>
+    <div>
+      <label for="inv_price">Price:</label>
+
+      <input
+        type="number"
+        id="inv_price"
+        name="inv_price"
+        required
+        placeholder="Enter Car Price"
+      />
+    </div>
+    <div>
+      <label for="inv_miles">Miles:</label>
+
+      <input
+        type="number"
+        id="inv_miles"
+        name="inv_miles"
+        required
+        placeholder="Enter Car Miles"
+      />
+    </div>
+    <div>
+      <label for="inv_color">Color:</label>
+
+      <input
+        type="text"
+        id="inv_color"
+        name="inv_color"
+        pattern="[a-zA-Z]{3,}$"
+        required
+        placeholder="Enter Car Color"
+      />
+    </div>
+    <button type="submit">Add New Item</button>
+  </form>
+</div>

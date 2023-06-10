@@ -1,82 +1,30 @@
 <h1><%- title %></h1>
-<h1><%- messages() %></h1>
-<!-- <% if (errors) { %>
-<ul class="notice">
-  <% errors.array().forEach(error => { %>
-  <li><%= error.msg %></li>
-  <% }) %>
-</ul>
-<% } %> -->
-
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
 <div class="management-div">
   <div class="classification-form">
-    <form action="/management/newclass">
+    <form action="/management/newclass" method="post">
       <div>
         <label for="classification_name">Classification Name:</label>
-        <p>Name must be alphabetic characters only</p>
+        
         <input
           type="text"
           id="classification_name"
           name="classification_name"
           required
+          pattern="[a-zA-Z]{3,}$"
         />
       </div>
       <div>
+        <p>Name must be alphabetic characters only</p>
         <button type="submit">Add Classification</button>
       </div>
     </form>
-    <% if (newclass) { %>
-    <div class="add-item-div">
-      <form action="/management/newitem" class="new-item-form">
-        <div>
-          <label for="inv_make">Make:</label>
-
-          <input
-            type="text"
-            id="inv_make"
-            name="inv_make"
-            required
-            pattern="/^[a-zA-Z]{3,}$/"
-            oninvalid="this.setCustomValidity('Car Make must be at least 3 letters long')"
-          />
-        </div>
-        <div>
-          <label for="inv_model">Model:</label>
-
-          <input
-            type="text"
-            id="inv_model"
-            name="inv_model"
-            required
-            pattern="/^[a-zA-Z]{3,}$/"
-            oninvalid="this.setCustomValidity('Car Model must be at least 3 letters long')"
-          />
-        </div>
-        <div>
-          <label for="inv_year">Year:</label>
-
-          <input
-            type="number"
-            id="inv_year"
-            name="inv_year"
-            min="1800"
-            required
-            pattern="/^[a-zA-Z]{3,}$/"
-            oninvalid="this.setCustomValidity('Car year must be at least 3 letters long')"
-          />
-        </div>
-        <div>
-          <label for="inv_description">Description:</label>
-          <textarea
-            id="inv_description"
-            name="inv_description"
-            oninvalid="this.setCustomValidity('Car year must be at least 3 letters long')"
-            required
-          ></textarea>
-        </div>
-      </form>
-      <button type="submit">Add New Item</button>
-    </div>
-    <% } %>
   </div>
 </div>
