@@ -1,23 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const utilities = require("../utilities/index");
-const managementController = require("../controller/managementController");
+const invController = require("../controller/invController")
 const managementValidation = require("../utilities/management-validation");
 
 
-router.get("/newitem", utilities.handleErrors(managementController.buildNewItem));
-router.get("/", utilities.handleErrors(managementController.buildManagement));
+router.get("/newitem", utilities.handleErrors(invController.buildNewItem));
+router.get("/", utilities.handleErrors(invController.buildManagement));
 
 router.post(
   "/newclass",
   managementValidation.classificationRules(),
   managementValidation.checkClassificationInput,
-  utilities.handleErrors(managementController.createNewClassification)
+  utilities.handleErrors(invController.createNewClassification)
 );
 router.post(
   "/newitem",
   managementValidation.inventoryRules(),
   managementValidation.checkInventoryInput,
-  utilities.handleErrors(managementController.createNewInventory)
+  utilities.handleErrors(invController.createNewInventory)
 );
 module.exports = router;
