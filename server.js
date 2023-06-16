@@ -14,12 +14,14 @@ const { get } = require("./routes/static");
 const utilities = require("./utilities/");
 const session = require("express-session");
 const pool = require("./database/");
-const bodyParser = require("body-parser")
-
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 /* ***********************
  * Middleware
  * ************************/
+
+
 app.use(
   session({
     store: new (require("connect-pg-simple")(session))({
@@ -33,8 +35,8 @@ app.use(
   })
 );
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // Express Messages Middleware
 app.use(require("connect-flash")());
@@ -44,6 +46,8 @@ app.use(function (req, res, next) {
 });
 
 
+app.use(cookieParser());
+app.use(utilities.checkJWTToken);
 /* ***********************
  * Routes
  *************************/
@@ -63,10 +67,6 @@ app.use("/management", require("./routes/managementRoute"));
 app.use(async (req, res, next) => {
   next({ status: 404, message: "Sorry, we appear to have lost that page." });
 });
-
-
-
-
 
 /* ***********************
  * Express Error Handler
