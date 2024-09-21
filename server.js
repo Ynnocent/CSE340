@@ -12,8 +12,8 @@ const expressLayouts = require("express-ejs-layouts");
 const baseController = require("./controller/baseController");
 const { get } = require("./routes/static");
 const utilities = require("./utilities/");
-const session = require("express-session");
-const pool = require("./database/");
+// const session = require("express-session");
+// const pool = require("./database/");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
@@ -22,18 +22,18 @@ const cookieParser = require("cookie-parser");
  * ************************/
 
 
-app.use(
-  session({
-    store: new (require("connect-pg-simple")(session))({
-      createTableIfMissing: true,
-      pool,
-    }),
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    name: "sessionId",
-  })
-);
+// app.use(
+//   session({
+//     store: new (require("connect-pg-simple")(session))({
+//       createTableIfMissing: true,
+//       pool,
+//     }),
+//     secret: process.env.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: true,
+//     name: "sessionId",
+//   })
+// );
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
